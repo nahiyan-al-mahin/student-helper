@@ -1,0 +1,29 @@
+{
+  "tasks": [
+    { "title": "Wake + freshen up", "days": ["Sat"], "start": "09:00", "end": "09:30", "category": "break", "priority": "normal", "notes": "" },
+    { "title": "Breakfast", "days": ["Sat"], "start": "09:30", "end": "10:00", "category": "break", "priority": "normal", "notes": "" },
+    { "title": "University study", "days": ["Sat"], "start": "10:00", "end": "12:00", "category": "study", "priority": "high", "notes": "" },
+    { "title": "Noon shower", "days": ["Sat"], "start": "12:00", "end": "12:30", "category": "break", "priority": "normal", "notes": "" },
+    { "title": "Relax / get ready", "days": ["Sat"], "start": "12:30", "end": "13:00", "category": "break", "priority": "normal", "notes": "" },
+    { "title": "Online course study", "days": ["Sat"], "start": "13:00", "end": "15:30", "category": "study", "priority": "high", "notes": "" },
+    { "title": "Lunch + break", "days": ["Sat"], "start": "15:30", "end": "16:15", "category": "break", "priority": "normal", "notes": "" },
+    { "title": "Books / light study", "days": ["Sat"], "start": "16:15", "end": "17:00", "category": "study", "priority": "normal", "notes": "" },
+    { "title": "Nap / rest", "days": ["Sat"], "start": "17:00", "end": "19:00", "category": "break", "priority": "normal", "notes": "" },
+    { "title": "Wake + refresh", "days": ["Sat"], "start": "19:00", "end": "19:30", "category": "break", "priority": "normal", "notes": "" },
+    { "title": "Revision / assignments", "days": ["Sat"], "start": "19:30", "end": "21:00", "category": "study", "priority": "high", "notes": "" },
+    { "title": "Personal / family time", "days": ["Sat"], "start": "21:00", "end": "22:00", "category": "personal", "priority": "normal", "notes": "" },
+    { "title": "Dinner", "days": ["Sat"], "start": "22:00", "end": "23:00", "category": "break", "priority": "normal", "notes": "" },
+    { "title": "Books / light course work", "days": ["Sat"], "start": "23:00", "end": "23:59", "category": "study", "priority": "normal", "notes": "" },
+    { "title": "University / outside", "days": ["Sun", "Mon", "Tue", "Wed", "Thu"], "start": "09:00", "end": "18:00", "category": "study", "priority": "high", "notes": "Classes, commute & outside work. Start at 8 AM when needed" },
+    { "title": "Come home + relax", "days": ["Sun", "Mon", "Tue", "Wed", "Thu"], "start": "18:00", "end": "18:30", "category": "break", "priority": "normal", "notes": "" },
+    { "title": "Optional nap / rest", "days": ["Sun", "Mon", "Tue", "Wed", "Thu"], "start": "18:30", "end": "19:30", "category": "break", "priority": "normal", "notes": "No nap? Use it for reading, study or personal time" },
+    { "title": "Snack + refresh", "days": ["Sun", "Mon", "Tue", "Wed", "Thu"], "start": "19:30", "end": "20:00", "category": "break", "priority": "normal", "notes": "" },
+    { "title": "Course / assignments / revision", "days": ["Sun", "Mon", "Tue", "Wed", "Thu"], "start": "20:00", "end": "21:30", "category": "study", "priority": "high", "notes": "" },
+    { "title": "Personal / family time", "days": ["Sun", "Mon", "Tue", "Wed", "Thu"], "start": "21:30", "end": "22:00", "category": "personal", "priority": "normal", "notes": "" },
+    { "title": "Dinner", "days": ["Sun", "Mon", "Tue", "Wed", "Thu"], "start": "22:00", "end": "22:45", "category": "break", "priority": "normal", "notes": "" },
+    { "title": "Book reading", "days": ["Sun", "Mon", "Tue", "Wed", "Thu"], "start": "22:45", "end": "23:30", "category": "study", "priority": "normal", "notes": "" },
+    { "title": "Light study / prepare tomorrow", "days": ["Sun", "Mon", "Tue", "Wed", "Thu"], "start": "23:30", "end": "23:59", "category": "study", "priority": "normal", "notes": "" },
+    { "title": "Gaming / entertainment", "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri"], "start": "00:00", "end": "02:15", "category": "personal", "priority": "normal", "notes": "Night after the previous day" },
+    { "title": "Personal time + wind down", "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri"], "start": "02:15", "end": "03:00", "category": "personal", "priority": "normal", "notes": "Sleep by 3 AM" }
+  ]
+}

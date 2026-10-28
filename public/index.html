@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="/img/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Student Helper · Build your routine, earn your streak</title>
+</head>
+<body>
+  <nav class="public-nav">
+    <a class="logo" href="/" style="padding:0"><span class="logo-mark"><i data-icon="sprout"></i></span> Student Helper</a>
+    <span class="spacer"></span>
+    <button class="icon-btn" id="themeBtn" title="Light / dark mode"><i data-icon="contrast"></i></button>
+    <a class="btn ghost" href="/login.html" id="loginLink">Log in</a>
+    <a class="btn grad" href="/register.html" id="startLink">Get started</a>
+  </nav>
+
+  <header class="landing-hero">
+    <div>
+      <span class="badge purple" style="margin-bottom:1rem"><i data-icon="cap"></i> Made for students</span>
+      <h1>Plan your day.<br><span>Show up. Level up.</span></h1>
+      <p class="lead">Build your study routine (or just snap a photo of it), get alarms when it's time to focus, earn 100 points a day and keep your streak alive with friends cheering you on.</p>
+      <div class="row" style="max-width:420px;margin-top:1.5rem">
+        <a class="btn grad" href="/register.html" style="padding:1em 1.4em">Create free account <i data-icon="arrow-right"></i></a>
+        <a class="btn ghost" href="/login.html" style="padding:1em 1.4em">I have an account</a>
+      </div>
+    </div>
+    <div style="position:relative">
+      <div class="mock">
+        <div class="hero-today" style="padding:1.1rem;margin-bottom:1rem">
+          <div class="ring-wrap" style="width:90px;height:90px">
+            <svg width="90" height="90"><circle cx="45" cy="45" r="38" stroke="rgba(255,255,255,.25)" stroke-width="10" fill="none"/><circle cx="45" cy="45" r="38" stroke="#fff" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="239" stroke-dashoffset="67"/></svg>
+            <div class="ring-label"><span><b style="font-size:1.4rem">72</b><small>of 100</small></span></div>
+          </div>
+          <div style="position:relative;z-index:1"><h2 style="color:#fff;margin:0">Good evening, Ayesha</h2><p>Next up: <b>Physics revision</b> at 7:00 PM</p></div>
+        </div>
+        <div class="task cat-study done"><div class="time">4:00 PM<small>5:30 PM</small></div><div class="info"><b><i data-icon="book"></i> Math homework</b><div class="meta"><span class="badge ok"><i data-icon="check"></i> Done</span></div></div><span class="badge ok">+36 pts</span></div>
+        <div class="task cat-exercise done"><div class="time">6:00 PM<small>6:30 PM</small></div><div class="info"><b><i data-icon="activity"></i> Evening run</b><div class="meta"><span class="badge ok"><i data-icon="check"></i> Done</span></div></div><span class="badge ok">+18 pts</span></div>
+        <div class="task cat-study checkin_open"><div class="time">7:00 PM<small>8:30 PM</small></div><div class="info"><b><i data-icon="book"></i> Physics revision</b><div class="meta"><span class="badge high"><i data-icon="bell"></i> High</span></div></div><span class="btn grad sm"><i data-icon="check-circle"></i> Check in</span></div>
+      </div>
+      <div class="float-badge" style="left:-10px;bottom:-18px"><i data-icon="flame"></i> 12-day streak</div>
+      <div class="float-badge" style="right:-6px;top:-18px;animation-delay:1.2s"><i data-icon="alarm"></i> Alarm: Physics!</div>
+    </div>
+  </header>
+
+  <section class="features">
+    <div class="card feature"><div class="emoji"><i data-icon="calendar"></i></div><h3>Your own routine</h3><p class="muted">Plan every day of the week, or upload a photo of your routine and we turn it into tasks.</p></div>
+    <div class="card feature"><div class="emoji"><i data-icon="alarm"></i></div><h3>Smart alarms</h3><p class="muted">Only high-priority tasks ring, like study and work time. No notification spam.</p></div>
+    <div class="card feature"><div class="emoji"><i data-icon="check-circle"></i></div><h3>Check in, earn points</h3><p class="muted">You have 15 minutes to check in when a task starts. 100 points a day, split across your tasks.</p></div>
+    <div class="card feature"><div class="emoji"><i data-icon="flame"></i></div><h3>Streaks</h3><p class="muted">Hit your daily points and watch your streak grow. Don't break the chain!</p></div>
+    <div class="card feature"><div class="emoji"><i data-icon="target"></i></div><h3>Goals</h3><p class="muted">Daily or weekly study hours, or a big learning goal. Study tasks count automatically.</p></div>
+    <div class="card feature"><div class="emoji"><i data-icon="star"></i></div><h3>Important dates</h3><p class="muted">Exams, deadlines and events in one calendar, so nothing sneaks up on you.</p></div>
+    <div class="card feature"><div class="emoji"><i data-icon="users"></i></div><h3>Follow & get inspired</h3><p class="muted">See what friends are working on and how close they are to a 100% routine. Lock your profile any time.</p></div>
+    <div class="card feature"><div class="emoji"><i data-icon="lock"></i></div><h3>Private chat</h3><p class="muted">Message the people you follow. Chats are stored encrypted.</p></div>
+    <div class="card feature"><div class="emoji"><i data-icon="chart"></i></div><h3>Reports</h3><p class="muted">See your best times, most skipped tasks and how your routine adds up over a semester.</p></div>
+  </section>
+
+  <section class="cta">
+    <h2>Your best semester starts with today's routine.</h2>
+    <p style="opacity:.9">Free for students. Works on your phone and computer.</p>
+    <a class="btn" href="/register.html" style="background:#fff;color:var(--primary);margin-top:.5rem">Start now</a>
+  </section>
+  <footer class="footer">Student Helper · made for students who want to show up every day</footer>
+
+  <script src="/js/icons.js"></script>
+  <script src="/js/api.js"></script>
+  <script>
+    // Already logged in? Change the buttons to go straight to the app.
+    if (auth.token) {
+      $('#loginLink').classList.add('hidden');
+      $('#startLink').textContent = 'Open app';
+      $('#startLink').href = '/app/today.html';
+    }
+    $('#themeBtn').onclick = () => {
+      const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('sh_theme', next); applyTheme(next);
+    };
+  </script>
+</body>
+</html>

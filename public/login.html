@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="/img/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Log in · Student Helper</title>
+</head>
+<body>
+  <div class="auth-wrap">
+    <aside class="auth-art">
+      <span class="bubble" style="width:300px;height:300px;right:-80px;top:-80px"></span>
+      <span class="bubble" style="width:180px;height:180px;left:-40px;bottom:10%"></span>
+      <a class="logo" href="/" style="color:#fff;padding:0 0 2rem"><span class="logo-mark" style="background:rgba(255,255,255,.2)"><i data-icon="sprout"></i></span> Student Helper</a>
+      <h1>Small habits.<br>Big results.</h1>
+ <p style="font-size:1.1rem;opacity:.9;max-width:380px">Every task you check in to earns points. Every good day grows your streak.</p>
+    </aside>
+    <main class="auth-form">
+      <div class="card">
+        <a class="logo" href="/" style="padding:0 0 1rem"><span class="logo-mark"><i data-icon="sprout"></i></span> Student Helper</a>
+ <h2>Welcome back</h2>
+        <form id="authForm">
+          <div class="field"><label>Username or email</label><input name="login" required autocomplete="username" autofocus></div>
+          <div class="field"><label>Password</label><input type="password" name="password" required autocomplete="current-password"></div>
+          <p class="small" id="formError" style="color:var(--pink);font-weight:700"></p>
+          <button class="btn grad block" style="padding:.9em">Log in</button>
+        </form>
+        <p class="small muted" style="text-align:center;margin:1rem 0 0">New here? <a href="/register.html">Create an account</a></p>
+      </div>
+    </main>
+  </div>
+  <script src="/js/icons.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/pages/auth.js"></script>
+</body>
+</html>

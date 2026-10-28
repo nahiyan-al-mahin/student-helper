@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Today · Student Helper</title>
+  <link rel="icon" href="/img/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body data-page="today" data-title="Today">
+<div id="app" hidden>
+  <!-- Filled in by /js/pages/today.js -->
+  <div id="notifBanner" class="notif-banner hidden">
+    <span style="font-size:1.6rem"><i data-icon="bell"></i></span>
+    <p><b>Turn on alarms.</b> Allow notifications so high-priority tasks can ring when they start.</p>
+    <button class="btn sm" id="enableNotif">Allow notifications</button>
+  </div>
+  <section class="hero-today" id="hero"></section>
+  <div class="grid cols-4" id="stats" style="margin-bottom:1rem"></div>
+  <div class="grid main-side">
+    <section class="card">
+      <div class="card-head">
+        <h2>Today's routine</h2>
+        <a class="btn sm ghost" href="/app/routine.html"><i data-icon="pencil"></i> Edit routine</a>
+      </div>
+      <p class="small muted" id="ruleNote"></p>
+      <div class="timeline" id="timeline"></div>
+    </section>
+    <aside>
+      <section class="card">
+        <div class="card-head"><h3><i data-icon="star"></i> Coming up</h3><a class="small" href="/app/planner.html">See all</a></div>
+        <div id="events"></div>
+      </section>
+      <section class="card">
+        <div class="card-head"><h3><i data-icon="target"></i> Goals</h3><a class="small" href="/app/goals.html">See all</a></div>
+        <div id="goals"></div>
+      </section>
+    </aside>
+  </div>
+</div>
+<script src="/js/icons.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/shell.js"></script>
+
+<script src="/js/pages/today.js"></script>
+</body>
+</html>

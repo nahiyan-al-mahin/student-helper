@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Routine · Student Helper</title>
+  <link rel="icon" href="/img/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body data-page="routine" data-title="Routine">
+<div id="app" hidden>
+  <div class="page-head">
+    <div>
+      <h1>My weekly routine</h1>
+      <p class="muted" style="margin:0">Tap a task to edit it. High priority tasks <i data-icon="bell"></i> ring an alarm when they start.</p>
+    </div>
+    <div class="toolbar">
+      <button class="btn ghost" id="aiBtn"><i data-icon="sparkles"></i> Import with AI</button>
+      <button class="btn ghost" id="photoBtn"><i data-icon="camera"></i> Upload photo</button>
+      <button class="btn grad" id="addBtn"><i data-icon="plus"></i> Add task</button>
+    </div>
+  </div>
+  <div class="day-tabs" id="dayTabs"></div>
+  <div class="week" id="week"></div>
+</div>
+<script src="/js/icons.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/shell.js"></script>
+<!-- Tesseract.js reads text from routine photos right in the browser (free, no API key) -->
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js"></script>
+<script src="/js/pages/routine.js"></script>
+</body>
+</html>

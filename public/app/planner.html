@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Important · Student Helper</title>
+  <link rel="icon" href="/img/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body data-page="planner" data-title="Important">
+<div id="app" hidden>
+  <div class="card-head" style="flex-wrap:wrap">
+    <div>
+      <h1>Important tasks & events</h1>
+      <p class="muted" style="margin:0">Exams, assignment deadlines, trips… never forget what matters.</p>
+    </div>
+    <button class="btn grad" id="addBtn"><i data-icon="plus"></i> Add</button>
+  </div>
+  <div class="grid main-side" style="margin-top:1rem">
+    <section>
+      <div class="tabs" id="filterTabs">
+        <button class="active" data-filter="upcoming">Upcoming</button>
+        <button data-filter="overdue">Overdue</button>
+        <button data-filter="done">Done</button>
+        <button data-filter="all">All</button>
+      </div>
+      <div class="card" id="list"></div>
+    </section>
+    <aside class="card">
+      <div class="card-head">
+        <button class="icon-btn" id="prevMonth">‹</button>
+        <h3 id="monthLabel"></h3>
+        <button class="icon-btn" id="nextMonth">›</button>
+      </div>
+      <div class="cal" id="cal"></div>
+      <p class="small muted" style="margin-top:.8rem" id="calNote">Tap a day to see what's on it.</p>
+    </aside>
+  </div>
+</div>
+<script src="/js/icons.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/shell.js"></script>
+
+<script src="/js/pages/planner.js"></script>
+</body>
+</html>

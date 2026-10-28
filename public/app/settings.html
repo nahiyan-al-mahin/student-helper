@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Settings · Student Helper</title>
+  <link rel="icon" href="/img/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body data-page="settings" data-title="Settings">
+<div id="app" hidden>
+  <h1>Settings</h1>
+  <div class="grid cols-2" style="align-items:start">
+    <section class="card">
+      <h2>Profile</h2>
+      <div class="person" style="margin-bottom:1rem">
+        <span id="avatarPreview"></span>
+        <label class="btn ghost sm" style="margin:0"><i data-icon="camera"></i> Change photo<input type="file" id="avatarInput" accept="image/*" hidden></label>
+      </div>
+      <form id="profileForm">
+        <div class="field"><label>Display name</label><input name="display_name" required maxlength="60"></div>
+        <div class="field"><label>School / college</label><input name="school" maxlength="100"></div>
+        <div class="field"><label>Bio</label><textarea name="bio" maxlength="280" placeholder="What are you working towards?"></textarea></div>
+        <div class="field"><label>Profile color</label><div class="chips" id="colors"></div></div>
+        <div class="field card" style="padding:.9rem;box-shadow:none">
+          <label class="switch" style="margin:0"><span><i data-icon="lock"></i> Lock my profile<br><small class="muted" style="font-weight:500">Only followers you accept can see your routine and progress</small></span>
+          <input type="checkbox" name="is_private"><span class="track"></span></label>
+        </div>
+        <button class="btn grad">Save profile</button>
+      </form>
+    </section>
+    <div>
+      <section class="card">
+        <h2>Alarms & notifications</h2>
+        <p class="muted small">High priority tasks ring when they start, while this website is open in a tab. Allow notifications so they also pop up when the tab is in the background.</p>
+        <p>Status: <b id="notifStatus"></b></p>
+        <div class="row">
+          <button class="btn" id="notifBtn"><i data-icon="bell"></i> Allow notifications</button>
+          <button class="btn ghost" id="testAlarm"><i data-icon="play"></i> Test alarm</button>
+        </div>
+      </section>
+      <section class="card">
+        <h2>Appearance</h2>
+        <div class="tabs" id="themeTabs" style="margin:0">
+          <button data-theme="light"><i data-icon="sun"></i> Light</button><button data-theme="dark"><i data-icon="moon"></i> Dark</button>
+        </div>
+      </section>
+      <section class="card">
+        <h2>Password</h2>
+        <form id="pwForm">
+          <div class="field"><label>Current password</label><input type="password" name="current_password" required autocomplete="current-password"></div>
+          <div class="field"><label>New password</label><input type="password" name="new_password" required minlength="6" autocomplete="new-password"></div>
+          <button class="btn">Change password</button>
+        </form>
+      </section>
+      <section class="card">
+        <h2>Account</h2>
+        <p class="muted small" id="emailLine"></p>
+        <button class="btn danger" id="logoutBtn"><i data-icon="logout"></i> Log out</button>
+      </section>
+    </div>
+  </div>
+</div>
+<script src="/js/icons.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/shell.js"></script>
+
+<script src="/js/pages/settings.js"></script>
+</body>
+</html>
