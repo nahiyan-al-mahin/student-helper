@@ -2,7 +2,7 @@
 
 A student routine website: build your routine (or upload a photo of it), get alarms for important tasks, check in to earn up to 100 points a day, keep a streak, set goals, follow friends, chat privately and see reports.
 
-The website and the future mobile app use **the same server and the same MySQL database**. The website calls a REST API (`/api/...`) and the mobile app will call the same API, so every feature only has to be built once.
+The website and the Android app use **the same server and the same MySQL database**. Both call the same REST API (`/api/...`), so every feature only has to be built once.
 
 ---
 
@@ -89,7 +89,7 @@ JSON format:
 The photo is read **in the browser** with [Tesseract.js](https://tesseract.projectnaptha.com/) (free OCR, no API key, needs internet the first time). It looks for lines like `8:00 - 9:30 Math` or `Mon 4pm-5pm Gym`, shows you the rows to check and fix, then saves them. It only works well with a clear, typed list. For anything else use **Import with AI** above.
 
 ### About alarms on the website
-Browsers can only ring while the site is open in a tab (it can be in the background once you allow notifications). Real phone alarms that work with the app closed will come with the mobile app, using the same `/api/today` data.
+Browsers can only ring while the site is open in a tab (it can be in the background once you allow notifications). The **Android app** asks the phone to ring at the start of every high priority task, every week, even when the app is closed (see section 6).
 
 ### Settings you can change (`server/.env`)
 - `CHECKIN_WINDOW_MINUTES` (default 15)
@@ -120,17 +120,33 @@ student-helper/
 │       ├── icons.js           All SVG icons (<i data-icon="bell"></i>)
 │       ├── shell.js           Menu + alarm engine
 │       └── pages/*.js         One script per page
+├── mobile/                    The Android app (Capacitor), see section 6
+├── .github/workflows/android.yml  Builds the APK on GitHub
 ├── render.yaml                How Render runs the site (hosting)
 └── docs/API.md                API list for the mobile app
 ```
 
 **Adding a new feature** usually means: a table in `schema.sql` → a file in `server/routes/` → one `app.use(...)` line in `server.js` → an HTML page in `public/app/` with a script in `public/js/pages/`.
 
-## 6. Going mobile later
-The API already uses **JSON + token login** (`Authorization: Bearer <token>`), which is exactly what a mobile app needs. Good next steps:
-- **React Native (Expo)** or **Flutter** app that calls the same `/api` (see `docs/API.md`)
-- Push notifications for alarms (Expo Notifications / Firebase)
-- The phone app talks to your hosted address (see section 7), e.g. `https://student-helper.onrender.com/api`, so it uses the **same database** as the website. In a web-view based app, set `window.API_URL = 'https://student-helper.onrender.com'` before loading `api.js`.
+## 6. The mobile app
+
+There are two ways to get Student Helper on a phone. Both use the same account and the same database as the website.
+
+**Android app (APK).** Download it from Settings → Get the app, or directly:
+https://github.com/nahiyan-al-mahin/student-helper/releases/download/android/student-helper.apk
+Open the file on the phone and allow "Install unknown apps" when Android asks. Alarms for high priority tasks ring even when the app is closed.
+
+**Install from the browser (any phone, also iPhone).** Open the website in Chrome (Android) or Safari (iPhone) and choose "Install app" / "Add to Home Screen". It gets an icon and opens without the browser bar, but alarms only ring while it is open.
+
+### How the Android app is made
+`mobile/` is a [Capacitor](https://capacitorjs.com/) project. It does not have its own pages: `mobile/build-web.js` copies `public/` into the app and sets `window.API_URL` to the Render address, so the app talks to the online API.
+
+You don't need Android Studio. Every push to `main` that changes `public/` or `mobile/` makes GitHub build a new APK (see the **Actions** tab) and put it on the `android` release, so the download link above always gives the newest app. Install the new APK over the old one; you stay logged in.
+
+- App icon and splash: `node mobile/scripts/make-assets.js` then `cd mobile && npm run icons`
+- Phone alarms: `NativeAlarms` in `public/js/shell.js` (only runs inside the app)
+- Signing key: every APK must be signed with the same key to install over the last one. The key is **not** in this repo (it is private). It is saved in the repo's secrets `SH_KEYSTORE_BASE64`, `SH_KEYSTORE_PASSWORD` and `SH_KEY_ALIAS`, and a backup copy is on your PC in `student-helper-signing/`. Never lose it and never share it: with the key, someone else could make a fake update of your app.
+- Build on your PC instead (needs Android Studio): `cd mobile`, `npm install`, `npm run sync`, `npm run open`.
 
 ## 7. Put it online for free (Render + TiDB Cloud)
 The website and the API run together on **Render** (free). The database lives on **TiDB Cloud** (free, works exactly like MySQL). The future phone app calls the same Render address, so everyone shares one database.

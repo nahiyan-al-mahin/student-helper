@@ -1,0 +1,14 @@
+{
+  "appId": "com.mahin.studenthelper",
+  "appName": "Student Helper",
+  "webDir": "www",
+  "android": {
+    "backgroundColor": "#f5f2ec"
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_sprout",
+      "iconColor": "#4f7a6a"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "Student Helper",
+  "short_name": "Student Helper",
+  "description": "Your routine, check-ins, streaks and goals in one calm place.",
+  "id": "/app/today.html",
+  "start_url": "/app/today.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5f2ec",
+  "theme_color": "#4f7a6a",
+  "icons": [
+    { "src": "/img/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/img/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/img/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Today", "url": "/app/today.html", "icons": [{ "src": "/img/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Routine", "url": "/app/routine.html", "icons": [{ "src": "/img/icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

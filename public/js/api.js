@@ -33,7 +33,15 @@ async function api(method, path, body) {
   const isForm = body instanceof FormData;
   if (body && !isForm) headers['Content-Type'] = 'application/json';
 
-  const res = await fetch(API_BASE + path, { method, headers, body: isForm ? body : body ? JSON.stringify(body) : undefined });
+  // The free server sleeps when nobody uses it. The first request can take
+  // up to a minute, so tell the student what is going on.
+  const slow = setTimeout(() => { if (!api.wakeShown) { api.wakeShown = true; toast('Waking up the server, this can take up to a minute...'); } }, 5000);
+  let res;
+  try {
+    res = await fetch(API_BASE + path, { method, headers, body: isForm ? body : body ? JSON.stringify(body) : undefined });
+  } catch {
+    throw new Error('No internet connection, or the server is not reachable.');
+  } finally { clearTimeout(slow); }
   let data = {};
   try { data = await res.json(); } catch { /* empty response */ }
 
@@ -150,3 +158,32 @@ function applyTheme(theme = localStorage.getItem('sh_theme')) {
   return t;
 }
 applyTheme();
+
+// =====================================================================
+//  Install as an app
+//  - Website: a service worker (/sw.js) makes it installable (PWA).
+//  - Android app: built with Capacitor (see /mobile). There the page runs
+//    inside the app, so IS_NATIVE_APP is true and we skip the PWA parts.
+// =====================================================================
+const IS_NATIVE_APP = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
+const ANDROID_APK_URL = 'https://github.com/nahiyan-al-mahin/student-helper/releases/download/android/student-helper.apk';
+
+if ('serviceWorker' in navigator && !IS_NATIVE_APP && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+
+// Chrome / Edge / Android fire this when the site can be installed
+let installPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  installPrompt = e;
+  document.dispatchEvent(new Event('installable'));
+});
+const isInstalled = () => IS_NATIVE_APP || matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+async function installApp() {
+  if (!installPrompt) return false;
+  installPrompt.prompt();
+  await installPrompt.userChoice;
+  installPrompt = null;
+  return true;
+}

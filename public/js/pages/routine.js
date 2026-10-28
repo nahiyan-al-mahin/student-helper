@@ -6,6 +6,7 @@ let selectedDay = new Date().getDay();
 async function load() {
   ({ tasks } = await api('GET', '/routine'));
   render();
+  NativeAlarms.sync(tasks); // keep phone alarms in step (Android app only)
 }
 
 function render() {

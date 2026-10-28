@@ -90,4 +90,17 @@ $('#themeTabs').onclick = (e) => {
 $('#logoutBtn').onclick = () => auth.logout();
 
 api('GET', '/auth/me').then(({ user }) => { me = user; auth.save(null, user); fill(); });
-fill(); notifState(); themeState();
+// ---------- Get the app ----------
+function appState() {
+  if (IS_NATIVE_APP) { $('#getApp').classList.add('hidden'); return; }
+  $('#apkLink').href = ANDROID_APK_URL;
+  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  if (isInstalled()) $('#installHint').textContent = 'Already installed on this device.';
+  else if (installPrompt) $('#installBtn').classList.remove('hidden');
+  else if (ios) $('#installHint').textContent = 'iPhone: open this site in Safari, tap Share, then "Add to Home Screen".';
+  else $('#installHint').textContent = 'Open this site in Chrome, tap the menu (three dots), then "Install app" or "Add to Home screen".';
+}
+document.addEventListener('installable', appState);
+$('#installBtn').onclick = async () => { if (await installApp()) { $('#installBtn').classList.add('hidden'); toast('Installed. Find Student Helper on your home screen.', 'success'); } };
+
+fill(); notifState(); themeState(); appState();

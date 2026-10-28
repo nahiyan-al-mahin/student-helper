@@ -1,0 +1,81 @@
+# Builds the Android app (APK) on GitHub's computers, for free.
+# Runs when the website or the app changes on main, or by hand (Actions tab -> Run workflow).
+# The APK is put on the "android" release, so this link always gives the newest one:
+# https://github.com/nahiyan-al-mahin/student-helper/releases/download/android/student-helper.apk
+name: Android APK
+
+on:
+  push:
+    branches: [main]
+    paths: ['public/**', 'mobile/**', '.github/workflows/android.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android-apk
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+
+      - name: Install
+        run: npm ci
+
+      - name: Copy the website into the app
+        run: npm run sync
+
+      # The private signing key comes from the repo secrets (without them a temporary debug key is used)
+      - name: Signing key from secrets
+        env:
+          KEYSTORE_BASE64: ${{ secrets.SH_KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.keystore"
+            echo "SH_KEYSTORE_FILE=$RUNNER_TEMP/release.keystore" >> "$GITHUB_ENV"
+          fi
+
+      - name: Build APK
+        working-directory: mobile/android
+        env:
+          SH_KEYSTORE_PASSWORD: ${{ secrets.SH_KEYSTORE_PASSWORD }}
+          SH_KEY_ALIAS: ${{ secrets.SH_KEY_ALIAS }}
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleRelease --no-daemon
+          cp app/build/outputs/apk/release/app-release.apk ../student-helper.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: student-helper-apk
+          path: mobile/student-helper.apk
+
+      - name: Publish to the "android" release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: android
+          name: Student Helper for Android
+          body: |
+            Newest Android app, built from commit ${{ github.sha }}.
+            Download **student-helper.apk** on your phone and open it to install (allow "Install unknown apps" for your browser when asked).
+          files: mobile/student-helper.apk
+          make_latest: true

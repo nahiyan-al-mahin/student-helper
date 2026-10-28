@@ -505,3 +505,9 @@ i[data-icon] svg { width: 1.15em; height: 1.15em; }
 .alarm .bell i[data-icon] svg { width: 4rem; height: 4rem; }
 .locked .big { color: var(--muted); }
 .features > .card + .card { margin-top: 0; }
+
+/* ---------- Get the app (Settings) ---------- */
+.app-option { display: flex; align-items: center; gap: .8rem; padding: .75rem 0; border-top: 1px solid var(--line); }
+.app-option > i[data-icon] { color: var(--primary); font-size: 1.3rem; }
+.app-option .grow { flex: 1; min-width: 0; }
+.app-option .grow b, .app-option .grow small { display: block; }

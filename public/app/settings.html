@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Settings · Student Helper</title>
   <link rel="icon" href="/img/logo.svg">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#4f7a6a">
+  <link rel="apple-touch-icon" href="/img/icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Student Helper">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
@@ -41,6 +47,20 @@
           <button class="btn ghost" id="testAlarm"><i data-icon="play"></i> Test alarm</button>
         </div>
       </section>
+      <section class="card" id="getApp">
+        <h2>Get the app</h2>
+        <p class="muted small">Use Student Helper like a normal app on your phone. Same account, same data.</p>
+        <div class="app-option">
+          <i data-icon="phone"></i>
+          <div class="grow"><b>Android</b><small class="muted">Real app. Alarms ring even when it's closed.</small></div>
+          <a class="btn sm" id="apkLink" href="#"><i data-icon="download"></i> Download APK</a>
+        </div>
+        <div class="app-option">
+          <i data-icon="sprout"></i>
+          <div class="grow"><b>Install from the browser</b><small class="muted" id="installHint">Adds an icon to your home screen. Opens without the browser bar.</small></div>
+          <button class="btn sm ghost hidden" id="installBtn"><i data-icon="plus"></i> Install</button>
+        </div>
+      </section>
       <section class="card">
         <h2>Appearance</h2>
         <div class="tabs" id="themeTabs" style="margin:0">
@@ -63,6 +83,7 @@
     </div>
   </div>
 </div>
+<script src="/js/config.js"></script>
 <script src="/js/icons.js"></script>
 <script src="/js/api.js"></script>
 <script src="/js/shell.js"></script>

@@ -94,6 +94,64 @@ setInterval(refreshUnread, 20000);
 api('GET', '/auth/me').then(({ user }) => auth.save(null, user)).catch(() => {});
 
 // =====================================================================
+//  NATIVE ALARMS (Android app only)
+//  In the installed app we ask Android to show a notification at the
+//  start time of every HIGH priority task, every week. Android shows
+//  them even when the app is closed. We re-plan them each time the app
+//  opens or the routine changes.
+// =====================================================================
+const NativeAlarms = {
+  plugin() { return IS_NATIVE_APP && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications; },
+
+  // Runs one sync at a time (the Routine page and the menu can both ask)
+  sync(tasks) {
+    this.queue = (this.queue || Promise.resolve()).then(() => this.run(tasks));
+    return this.queue;
+  },
+
+  async run(tasks) {
+    const LN = this.plugin();
+    if (!LN || !auth.token) return;
+    try {
+      if ((await LN.checkPermissions()).display !== 'granted') {
+        if ((await LN.requestPermissions()).display !== 'granted') return;
+      }
+      await LN.createChannel({ id: 'alarms', name: 'Task alarms', description: 'High priority tasks', importance: 5, vibration: true, visibility: 1 });
+      if (!tasks) ({ tasks } = await api('GET', '/routine'));
+
+      // Remove the old plan, then add the new one
+      const old = await LN.getPending();
+      if (old.notifications.length) await LN.cancel({ notifications: old.notifications.map((n) => ({ id: n.id })) });
+
+      const list = [];
+      for (const t of tasks) {
+        if (t.priority !== 'high') continue;
+        const [hour, minute] = t.start_time.split(':').map(Number);
+        for (const d of t.days.split(',').map(Number)) {
+          list.push({
+            id: t.id * 10 + d, // unique per task + weekday
+            title: `${t.title} is starting`,
+            body: 'Open Student Helper and check in to earn your points.',
+            channelId: 'alarms',
+            schedule: { on: { weekday: d + 1, hour, minute }, allowWhileIdle: true }, // Android: Sunday = 1
+            extra: { taskId: t.id },
+          });
+        }
+      }
+      if (list.length) await LN.schedule({ notifications: list });
+    } catch (err) { console.warn('Native alarms:', err); }
+  },
+};
+
+// Android back button: go back a page, or close the app on the first page
+if (IS_NATIVE_APP && window.Capacitor.Plugins.App) {
+  window.Capacitor.Plugins.App.addListener('backButton', ({ canGoBack }) => {
+    if (canGoBack && !/today\.html$/.test(location.pathname)) history.back();
+    else window.Capacitor.Plugins.App.exitApp();
+  });
+}
+
+// =====================================================================
 //  ALARM ENGINE
 //  Only HIGH priority tasks ring. It works while any page of the site
 //  is open in the browser. (The mobile app will use real push alarms.)
@@ -214,6 +272,7 @@ const Alarm = {
 document.addEventListener('click', () => Alarm.unlockAudio(), { once: true });
 document.addEventListener('plan-updated', (e) => Alarm.setPlan(e.detail));
 Alarm.refresh().then(() => { Alarm.check(); Rail.start(); });
+NativeAlarms.sync();
 setInterval(() => Alarm.check(), 5000);
 setInterval(() => Alarm.refresh(), 120000);
 

@@ -62,6 +62,8 @@ const ICONS = {
   ban: '<circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/>',
   'arrow-right': '<path d="M5 12h14M13 6l6 6-6 6"/>',
   dot: '<circle cx="12" cy="12" r="4.5" fill="currentColor" stroke="none"/>',
+  phone: '<rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/>',
+  download: '<path d="M12 3v12M7 10l5 5 5-5M4 20h16"/>',
   key: '<circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l3 3M14 9l2 2"/>',
 };
 
