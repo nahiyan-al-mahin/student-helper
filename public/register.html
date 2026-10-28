@@ -32,7 +32,7 @@
           <div class="field"><label>Your name</label><input name="display_name" required maxlength="60" autofocus placeholder="Ayesha Rahman"></div>
           <div class="field"><label>Username</label><input name="username" required pattern="[A-Za-z0-9_.]{3,30}" title="3-30 letters, numbers, _ or ." placeholder="ayesha_r"></div>
           <div class="field"><label>Email</label><input type="email" name="email" required autocomplete="email"></div>
-          <div class="field"><label>Password</label><input type="password" name="password" required minlength="6" autocomplete="new-password" placeholder="At least 6 characters"></div>
+          <div class="field"><label>Password</label><input type="password" name="password" required minlength="8" maxlength="72" autocomplete="new-password" placeholder="At least 8 characters"></div>
           <p class="small" id="formError" style="color:var(--pink);font-weight:700"></p>
           <button class="btn grad block" style="padding:.9em">Create account</button>
         </form>

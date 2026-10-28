@@ -3,7 +3,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const db = require('../db');
 const { createToken, requireAuth } = require('../middleware/auth');
-const { bad, str } = require('../utils/validate');
+const { bad, str, checkPassword } = require('../utils/validate');
 const { publicUser } = require('../utils/social');
 
 const router = express.Router();
@@ -17,12 +17,12 @@ router.post('/register', async (req, res) => {
 
   if (!/^[a-z0-9_.]{3,30}$/.test(username)) throw bad('Username must be 3-30 letters, numbers, _ or .');
   if (!/^\S+@\S+\.\S+$/.test(email)) throw bad('Please enter a valid email.');
-  if (password.length < 6) throw bad('Password must be at least 6 characters.');
+  checkPassword(password);
 
   const [taken] = await db.query('SELECT username, email FROM users WHERE username = ? OR email = ?', [username, email]);
   if (taken.length) throw bad(taken[0].username === username ? 'That username is taken.' : 'That email is already registered.');
 
-  const hash = await bcrypt.hash(password, 10);
+  const hash = await bcrypt.hash(password, 12);
   const [result] = await db.query(
     'INSERT INTO users (username, email, password_hash, display_name) VALUES (?, ?, ?, ?)',
     [username, email, hash, displayName]);

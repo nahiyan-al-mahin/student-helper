@@ -63,9 +63,10 @@ $('#avatarInput').onchange = (e) => {
 $('#pwForm').onsubmit = (e) => {
   e.preventDefault();
   withButton(e.target.querySelector('button'), async () => {
-    await api('PUT', '/users/me/password', formData(e.target));
+    const { token } = await api('PUT', '/users/me/password', formData(e.target));
+    auth.save(token, me); // other phones and browsers are logged out, this one stays in
     e.target.reset();
-    toast('Password changed', 'success');
+    toast('Password changed. You were logged out everywhere else.', 'success');
   });
 };
 

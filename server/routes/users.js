@@ -2,10 +2,11 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const db = require('../db');
-const { bad, str } = require('../utils/validate');
+const { bad, str, checkPassword } = require('../utils/validate');
+const { createToken } = require('../middleware/auth');
 const { publicUser, followStatus, canView } = require('../utils/social');
 const { getStats, getDayPlan } = require('../utils/routine');
-const { imageUpload } = require('../utils/upload');
+const { imageUpload, imageType } = require('../utils/upload');
 const { goalsWithProgress } = require('./goals');
 
 const router = express.Router();
@@ -41,9 +42,11 @@ router.put('/me', async (req, res) => {
 // POST /api/users/me/avatar   (form-data field name: "avatar")
 router.post('/me/avatar', imageUpload.single('avatar'), async (req, res) => {
   if (!req.file) throw bad('Please choose an image.');
+  const mime = imageType(req.file.buffer);
+  if (!mime) throw bad('Please upload a PNG, JPG, WEBP or GIF image.');
   await db.query(
     `INSERT INTO avatars (user_id, mime, data) VALUES (?, ?, ?)
-     ON DUPLICATE KEY UPDATE mime = VALUES(mime), data = VALUES(data)`, [req.user.id, req.file.mimetype, req.file.buffer]);
+     ON DUPLICATE KEY UPDATE mime = VALUES(mime), data = VALUES(data)`, [req.user.id, mime, req.file.buffer]);
   const url = `/api/avatars/${req.user.id}?v=${Date.now()}`; // ?v= makes browsers load the new picture
   await db.query('UPDATE users SET avatar_url = ? WHERE id = ?', [url, req.user.id]);
   res.json({ avatar_url: url });
@@ -51,11 +54,12 @@ router.post('/me/avatar', imageUpload.single('avatar'), async (req, res) => {
 
 // PUT /api/users/me/password  { current_password, new_password }
 router.put('/me/password', async (req, res) => {
-  const [[user]] = await db.query('SELECT password_hash FROM users WHERE id = ?', [req.user.id]);
+  const [[user]] = await db.query('SELECT * FROM users WHERE id = ?', [req.user.id]);
   if (!(await bcrypt.compare(String(req.body.current_password || ''), user.password_hash))) throw bad('Current password is wrong.');
-  if (String(req.body.new_password || '').length < 6) throw bad('New password must be at least 6 characters.');
-  await db.query('UPDATE users SET password_hash = ? WHERE id = ?', [await bcrypt.hash(req.body.new_password, 10), req.user.id]);
-  res.json({ ok: true });
+  const hash = await bcrypt.hash(checkPassword(req.body.new_password, 'New password'), 12);
+  await db.query('UPDATE users SET password_hash = ? WHERE id = ?', [hash, req.user.id]);
+  // Every other phone/browser is now logged out. This one gets a fresh token.
+  res.json({ ok: true, token: createToken({ ...user, password_hash: hash }) });
 });
 
 // GET /api/users/:username  -> profile page data

@@ -15,4 +15,15 @@ const imageUpload = multer({
   },
 });
 
-module.exports = { imageUpload };
+// Looks at the first bytes of the file to see what it REALLY is. A file named
+// "photo.png" could be a web page with a script inside; we never save those.
+function imageType(buf) {
+  const hex = buf.subarray(0, 12).toString('hex');
+  if (hex.startsWith('89504e470d0a1a0a')) return 'image/png';
+  if (hex.startsWith('ffd8ff')) return 'image/jpeg';
+  if (hex.startsWith('474946383761') || hex.startsWith('474946383961')) return 'image/gif';
+  if (hex.startsWith('52494646') && hex.slice(16, 24) === '57454250') return 'image/webp';
+  return null;
+}
+
+module.exports = { imageUpload, imageType };

@@ -11,7 +11,8 @@ function render() {
   if (!goals.length) {
     $('#goals').innerHTML = `<div class="card empty" style="grid-column:1/-1"><span class="big"><i data-icon="target"></i></span>
       No goals yet. Try <b>"Study 3 hours every day"</b> or <b>"Finish 10 chapters of Physics"</b>.<br><br>
-      <button class="btn" onclick="openForm()">Set my first goal</button></div>`;
+      <button class="btn" id="firstGoalBtn">Set my first goal</button></div>`;
+    $('#firstGoalBtn').onclick = () => openForm();
     return;
   }
   $('#goals').innerHTML = goals.map((g) => `

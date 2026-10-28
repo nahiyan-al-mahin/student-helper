@@ -107,3 +107,5 @@ $('#range').onclick = (e) => {
 };
 
 load().catch((err) => toast(err.message, 'error'));
+
+$('#printBtn').onclick = () => print(); // "Save PDF" uses the browser's print dialog

@@ -4,7 +4,7 @@
 //  cached, so data is always fresh from the server.
 //  Change VERSION when you want every phone to drop its old copy.
 // =====================================================================
-const VERSION = 'sh-v1';
+const VERSION = 'sh-v2';
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(VERSION).then((c) => c.addAll([

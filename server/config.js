@@ -28,6 +28,9 @@ const config = {
   port: Number(process.env.PORT) || 3000,
   db: dbSettings(),
   jwtSecret: process.env.JWT_SECRET || 'dev-secret',
+  isProduction: process.env.NODE_ENV === 'production' || !!process.env.RENDER,
+  // Websites allowed to call the API from a browser (besides this site itself and the Android app)
+  allowedOrigins: (process.env.ALLOWED_ORIGINS || '').split(',').map((o) => o.trim()).filter(Boolean),
   chatKey: process.env.CHAT_SECRET_KEY || '',
   checkinWindow: Number(process.env.CHECKIN_WINDOW_MINUTES) || 15,
   streakMinPoints: Number(process.env.STREAK_MIN_POINTS) || 70,
@@ -36,6 +39,12 @@ const config = {
 if (!/^[0-9a-fA-F]{64}$/.test(config.chatKey)) {
   console.error('\n  CHAT_SECRET_KEY in server/.env must be 64 hex characters.');
   console.error("  Create one with: node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\"\n");
+  process.exit(1);
+}
+
+// Online, the login-token secret must be long and random, or anyone could make fake logins
+if (config.isProduction && config.jwtSecret.length < 32) {
+  console.error('\n  JWT_SECRET must be set to a long random value (32+ characters) on the server.\n');
   process.exit(1);
 }
 

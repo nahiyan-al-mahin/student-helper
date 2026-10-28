@@ -6,7 +6,7 @@
   "scripts": {
     "build:web": "node build-web.js",
     "sync": "npm run build:web && npx cap sync android",
-    "icons": "npx capacitor-assets generate --android --iconBackgroundColor \"#4f7a6a\" --splashBackgroundColor \"#f5f2ec\" --splashBackgroundColorDark \"#1d2421\"",
+    "icons": "npx @capacitor/assets@3.0.5 generate --android --iconBackgroundColor \"#4f7a6a\" --splashBackgroundColor \"#f5f2ec\" --splashBackgroundColorDark \"#1d2421\"",
     "open": "npx cap open android"
   },
   "dependencies": {
@@ -16,8 +16,9 @@
     "@capacitor/local-notifications": "8.3.1"
   },
   "devDependencies": {
-    "@capacitor/assets": "3.0.5",
     "@capacitor/cli": "8.5.3"
   },
-  "engines": { "node": ">=22" }
+  "engines": {
+    "node": ">=22"
+  }
 }

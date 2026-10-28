@@ -176,7 +176,19 @@ The website and the API run together on **Render** (free). The database lives on
 - Profile pictures are stored in the database, so they survive restarts.
 - The time zone for "today", check-ins and streaks is `APP_TIMEZONE` (Asia/Dhaka).
 
-## 8. Problems?
+## 8. Security (what protects the app)
+- Passwords are hashed with bcrypt (never stored), 8+ characters. Changing your password logs out every other phone and browser.
+- Logins are signed tokens (JWT, HS256). Online the server refuses to start without a long random `JWT_SECRET`.
+- Every API route checks that the data belongs to you; locked profiles hide routine, stats and goals from non-followers.
+- Chat messages are encrypted in the database (AES-256-GCM, `CHAT_SECRET_KEY`).
+- Too many wrong logins from one place: blocked for 15 minutes. All API calls are rate limited.
+- Security headers (helmet) with a Content-Security-Policy: only our own scripts can run, which stops injected code (XSS). The Android app has the same rules in each page.
+- Profile photos are checked by their real file content, not their name.
+- The database connection is encrypted (TLS) and all user input goes through `?` placeholders (no SQL injection).
+- The Android app asks for only internet, notifications and alarms, never backs up its data, and only talks to the server over HTTPS.
+- `server/.env` and the APK signing key are private and never go to GitHub.
+
+## 9. Problems?
 - **"Could not use the database"**: MySQL isn't running, the password in `.env` is wrong, or you skipped `npm run db:setup`. On Render: check `DATABASE_URL` (TiDB uses port **4000**) and that `DB_SSL` is `true`.
 - **"CHAT_SECRET_KEY must be 64 hex characters"**: generate one with the command in step 2.
 - **Port 3000 is busy**: change `PORT` in `.env`.
